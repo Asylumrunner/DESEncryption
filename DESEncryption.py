@@ -1,5 +1,20 @@
 __author__ = 'Michael Burdick'
 
+import sys
+
+
+def permute(list_to_permute, permutation_matrix):
+    permuted_list = [] #create an empty list
+    for x in range(len(permutation_matrix)): #for every value in the matrix
+        permuted_list.append(list_to_permute[permutation_matrix[x]]) #use the permutation matrix to see what value should be placed here
+    return permuted_list
+
+
+def permute_key(key, permutation_matrix_C, permuation_matrix_D):
+    key_permutations = []
+    
+
+
 initial_permutation = [58, 50, 42, 34, 26, 18, 10, 2,
                        60, 52, 44, 36, 28, 20, 12, 4,
                        62, 54, 46, 38, 30, 22, 14, 6,
@@ -35,6 +50,16 @@ thirty_two_bit_permutation = [16, 7, 20, 21,
                               32, 27, 3, 9,
                               19, 13, 30, 6,
                               22, 11, 4, 25]
+
+key_permutations_C = [57, 49, 41, 33, 25, 17, 9,
+                      1, 58, 50, 42, 34, 26, 18,
+                      10, 2, 59, 51, 43, 35, 27,
+                      19, 11, 3, 60, 52, 44, 36]
+
+key_permutations_D = [63, 55, 47, 39, 31, 23, 15,
+                      7, 62, 54, 46, 38, 30, 22,
+                      14, 6, 61, 53, 45, 37, 29,
+                      21, 13, 5, 28, 20, 12, 4]
 
 S1_row_one = [14, 4, 13, 1, 2, 15, 11, 8, 3, 10, 6, 12, 5, 9, 0, 7]
 S1_row_two = [0, 15, 7, 4, 14, 2, 13, 1, 10, 6, 12, 11, 9, 5, 3, 8 ]
@@ -83,5 +108,26 @@ S8_row_two = [1, 15, 13, 8, 10, 3, 7, 4, 12, 5, 6, 11, 0, 14, 9, 2]
 S8_row_three = [7, 11, 4, 1, 9, 12, 14, 2, 0, 6, 10, 13, 15, 3, 5, 8]
 S8_row_four = [2, 1, 14, 7, 4, 10, 8, 13, 15, 12, 9, 0, 3, 5, 6, 11]
 S8 = [S8_row_one, S8_row_two, S8_row_three, S8_row_four]
+
+#------------START OF MAIN---------------------
+plaintext_filename = sys.argv[1]
+plaintext_file = open(plaintext_filename, "r")
+plaintext = []
+
+for line in plaintext_file:
+    plaintext.append(line)
+
+plaintext_file.close()
+key = 1001011010010110100101101001011010010110100101101001011010010110
+
+plaintext_bin = plaintext[0].split()
+
+permuted_plaintext = permute(plaintext_bin, initial_permutation)
+
+L = permuted_plaintext[0:32]
+R = permuted_plaintext[32:]
+
+key_permutations = permute_key(key, key_permutations_C, key_permutations_D)
+
 
 
